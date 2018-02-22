@@ -1,4 +1,6 @@
 FROM alpine:3.6
+MAINTAINER Richardson Lima <contato@richardsonlima.com.br>
+
 RUN apk add --update nginx && rm -rf /var/cache/apk/*
 RUN mkdir -p /tmp/nginx/client-body
 
