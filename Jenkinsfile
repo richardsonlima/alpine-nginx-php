@@ -1,19 +1,18 @@
-  pipeline {
-  agent {
-    docker 'bpmd-alpine-nginx:latest'
-  }
-  stages {
-    stage('Build') {
-      steps {
-        echo 'Building..'
-        sh 'sudo docker run -d -p 80:80 richardsonlima/bpmd-alpine-nginx:latest'
+pipeline {
+    agent any
+    stages {
+        stage('Build') {
+            steps {
+                sh 'docker build -t richardsonlima/alpine-nginx-php:1.0.0 .'
+            }
+        }
+        stage('Push to dockerhub') {
+            steps {
+                withCredentials([usernamePassword(credentialsId: 'dockerHub', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) {
+                sh "docker login -u ${env.dockerHubUser} -p ${env.dockerHubPassword}"
+                sh 'docker push richardsonlima/alpine-nginx-php:1.0.0'
+            }
+         }
       }
-    }
-    stage('Test') {
-      steps {
-        echo 'Testing..'
-        sh 'nc -v localhost 80'
-      }
-    }
-  }
+   }
 }
