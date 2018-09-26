@@ -1,16 +1,11 @@
 import groovy.json.JsonSlurperClassic
 
 node {
+    try {
         def BRANCH_NAME = "master"
         def IMAGE_VERSION = "$BUILD_NUMBER"
         def REPO = "https://github.com/richardsonlima/alpine-nginx-php-docker.git"
         def REGISTRY_REPO = "richardsonlima/alpine-nginx-php"
-        
-  try {
-
-          
-        //message = "Pipeline started $BRANCH_NAME - Build $BUILD_NUMBER"
-        //notifyBuild(message)
 
         stage("cloning_$PROJECT") {
                 checkout([$class: 'GitSCM',
@@ -62,19 +57,12 @@ node {
             returnStdout: true
         )
 
-        if (dockerImageId != "") {
-            sh("docker rmi -f ${dockerImageId}")
-        }
+                if (dockerImageId != "") {
+                    sh("docker rmi -f ${dockerImageId}")
+                }
         }
 
-        } 
+    } 
   
-        /* catch (error) {
-            currentBuild.result = "FAILED"
-            throw error
-        } finally {
-            notifyBuild("", currentBuild.result)
-        }*/
+
 }
-
-  
