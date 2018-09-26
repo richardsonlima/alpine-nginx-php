@@ -48,12 +48,9 @@ node {
                 """
             }
         }
-
-       // do something that fails
-       //sh "exit 1"
         
-    } catch (Exception err) {
+    } catch (error {
         currentBuild.result = 'FAILURE'
-    }
-    echo "RESULT: ${currentBuild.result}"
+        throw error
+    } echo "RESULT: ${currentBuild.result}"
 }
