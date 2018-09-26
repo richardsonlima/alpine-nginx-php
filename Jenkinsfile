@@ -43,7 +43,6 @@ node {
             //def LOGIN_CMD = sh(script: "aws ecr get-login --profile xxx --no-include-email --region sa-east-1", returnStdout: true)
             dir(env.WORKSPACE) {
                 sh """
-                    #${LOGIN_CMD}
                     docker build -t $REGISTRY_REPO:$IMAGE_VERSION -f Dockerfile .
                     docker push $REGISTRY_REPO:$IMAGE_VERSION
                 """
