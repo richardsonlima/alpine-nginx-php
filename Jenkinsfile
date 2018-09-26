@@ -7,8 +7,8 @@ node {
         def REPO = "https://github.com/richardsonlima/alpine-nginx-php-docker.git"
         def REGISTRY_REPO = "richardsonlima/alpine-nginx-php"
           
-        message = "Pipeline started $BRANCH_NAME - Build $BUILD_NUMBER"
-        notifyBuild(message)
+        //message = "Pipeline started $BRANCH_NAME - Build $BUILD_NUMBER"
+        //notifyBuild(message)
 
         stage("cloning_$PROJECT") {
                 checkout([$class: 'GitSCM',
