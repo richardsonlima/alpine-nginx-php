@@ -49,13 +49,5 @@ node {
             }
         }
 
-    } catch (error) {
-        currentBuild.result = "FAILED"
-        throw error
-    } finally {
-        /* dir(env.WORKSPACE) {
-            sh(script: "docker-compose down")
-        } */
-        notifyBuild("", currentBuild.result)
-    }
+    } 
 }
