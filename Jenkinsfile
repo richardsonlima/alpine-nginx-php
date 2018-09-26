@@ -1,12 +1,12 @@
 import groovy.json.JsonSlurperClassic
 
 node {
-    try {
         def BRANCH_NAME = "master"
         def IMAGE_VERSION = "$BUILD_NUMBER"
         def REPO = "https://github.com/richardsonlima/alpine-nginx-php-docker.git"
         def REGISTRY_REPO = "richardsonlima/alpine-nginx-php"
 
+    try {
         stage("cloning_$PROJECT") {
                 checkout([$class: 'GitSCM',
                     userRemoteConfigs: [[url: "$REPO_GIT"]],
@@ -62,7 +62,5 @@ node {
                 }
         }
 
-    } 
-  
-
+    }   
 }
