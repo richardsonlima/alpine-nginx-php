@@ -50,7 +50,7 @@ node {
         }
 
        // do something that fails
-        sh "exit 1"
+        //sh "exit 1"
         currentBuild.result = 'SUCCESS'
     } catch (Exception err) {
         currentBuild.result = 'FAILURE'
