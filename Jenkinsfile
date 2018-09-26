@@ -1,17 +1,15 @@
-import groovy.json.JsonSlurperClassic
-
 node {
+    try {
         def BRANCH_NAME = "master"
         def IMAGE_VERSION = "$BUILD_NUMBER"
         def REPO = "https://github.com/richardsonlima/alpine-nginx-php-docker.git"
         def REGISTRY_REPO = "richardsonlima/alpine-nginx-php"
 
-    try {
-        stage("cloning_$PROJECT") {
+        stage("cloning_project") {
                 checkout([$class: 'GitSCM',
                     userRemoteConfigs: [[url: "$REPO_GIT"]],
                     branches: [[name: "$BRANCH_NAME"]],
-                    //credentialsId: 'xxxxxx',
+                    credentialsId: '',
                     clean: false,
                     extensions: [[$class: 'SubmoduleOption',
                                     disableSubmodules: false,
@@ -51,16 +49,13 @@ node {
             }
         }
 
-        stage('Docker - Clean Images') {
-        def dockerImageId = sh(
-            script: "docker images | awk '{print \$3}' | sed '2!d'",
-            returnStdout: true
-        )
-
-                if (dockerImageId != "") {
-                    sh("docker rmi -f ${dockerImageId}")
-                }
-        }
-
-    }   
+    } catch (error) {
+        currentBuild.result = "FAILED"
+        throw error
+    } finally {
+        /* dir(env.WORKSPACE) {
+            sh(script: "docker-compose down")
+        } */
+        notifyBuild("", currentBuild.result)
+    }
 }
