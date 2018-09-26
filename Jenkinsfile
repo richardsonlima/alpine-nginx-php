@@ -3,6 +3,7 @@ node {
         def BRANCH_NAME = "master"
         def IMAGE_VERSION = "$BUILD_NUMBER"
         def REPO = "https://github.com/richardsonlima/alpine-nginx-php-docker.git"
+        def REPO_GIT = "https://github.com/richardsonlima/alpine-nginx-php-docker.git"
         def REGISTRY_REPO = "richardsonlima/alpine-nginx-php"
 
         stage("cloning_project") {
