@@ -44,6 +44,7 @@ node {
             dir(env.WORKSPACE) {
                 sh """
                     docker build -t $REGISTRY_REPO:$IMAGE_VERSION -f Dockerfile .
+                    whoami
                     sudo docker push $REGISTRY_REPO:$IMAGE_VERSION
                 """
             }
